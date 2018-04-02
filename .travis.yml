@@ -1,15 +1,20 @@
 language: node_js
 sudo: required
 before_install:
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 install: true
 before_script:
-  - export DOCKER_HOST="$HOST_NAME"
+- export DOCKER_HOST="$HOST_NAME"
 script:
-  - docker build -t $DOCKER_USERNAME/htmltest .
-  - docker push $DOCKER_USERNAME/htmltest
+- docker build -t $DOCKER_USERNAME/htmltest .
+- docker push $DOCKER_USERNAME/htmltest
 after_success:
-  - docker stop htmltest
-  - docker rm htmltest
-  - docker run -p 8088:80 -d --name htmltest $DOCKER_USERNAME/htmltest:latest
+- docker stop htmltest
+- docker rm htmltest
+- docker run -p 8088:80 -d --name htmltest $DOCKER_USERNAME/htmltest:latest
 service: docker
+env:
+  global:
+  - secure: eWl3A5C35A9TZELFxw2w2pv1pqOZcZ2sWY0PQ+luahNGsSmSu/DB+PZAevWAX6qMqsBfbQYRm5F4bv0HVlK9ePzRyXa70qCdh8eakzGRfkX2GHZurAdUE1x2ru0x7a4LVz5VqpDzjjy5PdWdGCuEmUzhcKX5aEE6GSi/ebjMId/aUt7u+H15RnirwKA92ro2YbKejbu4ZX2YcpuXHjA/oiqByXvu1HbUbL7H3Z+ZJfrARVWlbzlW+czFdPc3O9kCoIRa4pUF5aUq4y0LbF/OsQxsk65pTaBE4uE7fJ6gl3DSs93NDBavz4ZX+zthTa8ay/O4oAIAEFvoab1G4l2PjEqLkQQHag+k8o6wscrrUvvfc30fMu4/9v91w6AkMToOfNRjzl75+YsuJBgbESOHXi1gPpftplk+zmAm+AvxKzijnumo9FX12nixSNIw4Bz2c9MyckkBx7Pf7r6TajOX4ob7KqRNRF/g8hkf9vbetN9ZhBMHKWn4Kp4pdwVPZo2eb6swyyg4BHsZ8Y/ZLtmRpZfw0jT0OJaT4Uw2foqFLT/5eb41HokPo9r9L0yCfz8Se79tOwUuE9mlgOtMwjUfoHPmLdudJgkwCBX15duFgzcUrmahxw/8shJ4kKl8qF///VXisYoscpn1IegLyqlGGjQt3tHSp2+BIwnbG05AjoY=
+  - secure: bkn6+i/j/jVm3ELQWso2lrp6e5W9nE7BcfgWOVtje5cIlhMHsHr/6qEonT+OGQBALIqcztw4ZcIjAuJBJduuU8C3gfxjhxQ3cmxLGsuJuSauXuq1kcykZhdDPTdt3p7aEj3jXx8kuPK/JxQRy4Pm0B66Pk/DnJLZr0Xl/qfJFGpJQ4KMtbpa5RHkgrZZ9JwAF3dWS23Nw9PChuPi4GP55zmzwqQT12NS80JlMBKhT9aCwuUMlq0X5Q/Iqi/5QsqSo9eKJMHgukw0SxtYdbqy09cyikSsrjXJQeYFSN3BtgFXIoZXqgUp9mOP2hUm/duuGKtb56YBF5JzR/ayHjHtoPUPu6yEG2rlc7AvWw6zwrEqtU9FJCzyQojmVcnBQ4hk+uEBHf0+XUtEORzw6mspP5QoU22LHQU5qklHE7Hl821/kXCYS16zW6m5UzrM3pWwkZr4EpyiVcyaAMT3vQnbYZV2ofaWP2JAy1SJ1CZs9xILuaAdx7RpB4mpzS1hcS6NuUxfV5Z1vQJIgKyTv2Oxdy0mfm2OMe6rfimuiZsHd6BI9KAg4c9fYLmb+d7t0faMaN3280Nmjj+1GhEbRtIQ/ogh3RGXDB867j+n2m109c/LYfs1db6uZJ5py2KY4S5GUzQccRvGA22iAHtQ0HjH71UzBOgr97266QaOPANOtek=
+  - secure: Lw6GZR4bq5/ZqEcGc2mrYEzjVHvQ6z1iET9bzUnhh7HaPTw4qTFfJvMNkrs+z0WaLLKL7Ol3qpjy7MbcwOHUHAL8OTn1LFzzvTZwUujmZN6VKiYNlTPPhSDMwyhDU9BNzWV7GVi4IyPI8TNK931udUbpWX46gCeY5XDng5LzgsQRM5Q++SOYmp3akvbX5XdUTDnlpLG98n8nAVvPDcUE7JxvdqVwGzcKujCF5o8NI1tk2GGsmg6w+JylRPiSwODPbmgzLDznogndDoneD+Q9mvgjqns2kL56wbs7WhpP4VdVXEBlwUDZGPMMLX8kmKMfLr7yyIAGlb8hUCTEm8A0dI1hDA9D8I0CjhXkPMw+aMf6cB+sK314K/sLRRPDUiu88xS88tcwmr5OuuR/g7rTZIKqYQ5CsAmIf2oehJ3YY+a3oqbmUvVfq4MBkoYwmXFp7Zm2kYG1hjvmQGINeolDmMZsswrsTW42d70HQDUOYIefydJp4gqTrG7uQYXklJvkHMSsT3SwTF/QwQH8KtTrUcNJpkL08cmAAHGV95FawwsphAzV8JxwVeMzx7BVRxs1FJ+2+NZ2gTaAyRvEKT7qI0YAp6ehMUKNL5oX19np7ACx7jp4o9JU8GKJqtcpMyZ0zilSRYt92j+2xxIM6j6HgeGl6mWImI1pFyfVzd2cGSw=
